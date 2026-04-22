@@ -758,22 +758,18 @@ footer{
         </div>
       </div>
       <div>
-        <form class="contact-form" onsubmit="handleSubmit(event)">
-          <div class="form-group">
-            <label class="form-label">Your Name</label>
-            <input type="text" class="form-input" placeholder="John Doe" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-input" placeholder="john@company.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Message</label>
-            <textarea class="form-textarea" placeholder="Tell me about the opportunity..." required></textarea>
-          </div>
-          <button type="submit" class="form-submit">Send Message →</button>
-          <p class="form-note">// Or email directly at pujarishubham7028@gmail.com</p>
-        </form>
+       <div class="contact-form">
+  <div class="form-group">
+    <label class="form-label">Your Name</label>
+    <input type="text" class="form-input" id="wa-name" placeholder="John Doe">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Message</label>
+    <textarea class="form-textarea" id="wa-message" placeholder="Tell me about the opportunity..."></textarea>
+  </div>
+  <button class="form-submit" onclick="sendWhatsApp()">Send on WhatsApp →</button>
+  <p class="form-note">// Opens WhatsApp directly on your device</p>
+</div>
       </div>
     </div>
   </div>
@@ -796,16 +792,12 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.tl-item').forEach(el => observer.observe(el));
 
 // Contact form handler
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = 'Message Sent ✓';
-  btn.style.background = '#7fffca';
-  setTimeout(() => {
-    btn.textContent = 'Send Message →';
-    btn.style.background = '';
-    e.target.reset();
-  }, 3000);
+function sendWhatsApp() {
+  const name = document.getElementById('wa-name').value || 'Someone';
+  const message = document.getElementById('wa-message').value || 'Hi, I visited your portfolio!';
+  const text = `Hi Shubham, I'm ${name}. ${message}`;
+  const url = `https://wa.me/917028855501?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
 }
 
 // Active nav highlight
