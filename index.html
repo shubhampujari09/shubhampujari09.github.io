@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Pujari — Automation Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card: #13131c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .name-block h1 {
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .name-block .title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  .contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .contact-block a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .contact-block a:hover { color: var(--accent); }
+
+  .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  section:nth-child(2) { animation-delay: 0.1s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.3s; }
+  section:nth-child(5) { animation-delay: 0.4s; }
+  section:nth-child(6) { animation-delay: 0.5s; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── SUMMARY ── */
+  .summary-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #94a3b8;
+    max-width: 680px;
+  }
+
+  .summary-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-row:hover { border-color: rgba(0,229,255,0.3); }
+
+  .skill-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    padding-top: 2px;
+  }
+
+  .skill-val {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 40px;
+  }
+
+  .exp-item:last-child { margin-bottom: 0; }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .exp-item::after {
+    content: '';
+    position: absolute;
+    left: 3px; top: 20px;
+    width: 1px;
+    height: calc(100% - 12px);
+    background: linear-gradient(var(--border), transparent);
+  }
+
+  .exp-item:last-child::after { display: none; }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .exp-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .exp-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  .exp-company {
+    font-size: 0.82rem;
+    color: var(--accent2);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.65;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    transition: border-color 0.2s;
+  }
+
+  .edu-card:hover { border-color: rgba(0,229,255,0.3); }
+
+  .edu-degree {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .edu-uni {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .edu-score {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: right;
+  }
+
+  .edu-score span {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 0;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    animation: fadeUp 0.7s 0.6s ease both;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 560px) {
+    .skill-row { grid-template-columns: 1fr; gap: 4px; }
+    .contact-block { align-items: flex-start; }
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .edu-score { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="name-block">
+        <h1>Shubham Pujari</h1>
+        <p class="title">Automation Engineer</p>
+      </div>
+      <div class="contact-block">
+        <a href="tel:+917028855501"><span class="dot"></span>+91 7028855501</a>
+        <a href="mailto:pujarishubham7028@gmail.com"><span class="dot"></span>pujarishubham7028@gmail.com</a>
+        <a href="https://www.linkedin.com/in/shubham-pujari-932338286" target="_blank"><span class="dot"></span>LinkedIn</a>
+        <a href="#"><span class="dot"></span>Ahmednagar, Maharashtra</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SUMMARY -->
+  <section>
+    <div class="section-label">Profile</div>
+    <p class="summary-text">
+      Automation Engineer with <strong>1.5+ years</strong> of experience in
+      <strong>PLC programming</strong>, SCADA integration, and industrial communication
+      networks for large-scale warehouse automation systems. Hands-on expertise in
+      <strong>PLC–WMS integration</strong>, real-time monitoring, and system validation.
+      Seeking office-based or hybrid roles in automation development, system integration,
+      or technical application engineering where field experience and software skills
+      can drive value from day one.
+    </p>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <div class="section-label">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <div class="skill-key">PLC Platforms</div>
+        <div class="skill-val">Siemens S7 (TIA Portal), Allen-Bradley, Mitsubishi PLC</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">SCADA / HMI</div>
+        <div class="skill-val">Siemens HMI, FactoryTalk View</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">Communication</div>
+        <div class="skill-val">PROFINET, Ethernet/IP, Wireless Communication</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">Programming</div>
+        <div class="skill-val">Python (Basic), SQL (Basic)</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">Integration</div>
+        <div class="skill-val">PLC–WMS Integration, System Diagnostics</div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-key">Domain</div>
+        <div class="skill-val">Conveyor Systems, Stacker Cranes, Shuttle Systems, Warehouse Automation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <div class="section-label">Experience</div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="exp-title">Automation Commissioning Engineer</div>
+        <div class="exp-date">Jan 2025 — Apr 2026</div>
+      </div>
+      <div class="exp-company">Godrej Koerber Supply Chain Ltd · Navi Mumbai</div>
+      <ul class="exp-bullets">
+        <li>Developed PLC control logic using Siemens TIA Portal for conveyor, stacker crane, and shuttle systems in large-scale warehouse automation projects</li>
+        <li>Integrated PLC systems with SCADA and WMS platforms enabling real-time monitoring, data exchange, and centralized control</li>
+        <li>Configured industrial communication networks including PROFINET, Ethernet/IP, and wireless systems</li>
+        <li>Implemented safety interlocks, control strategies, and performed system validation including FAT, SAT, and I/O testing</li>
+        <li>Collaborated with electrical, mechanical, and software teams for end-to-end system integration</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="exp-title">Graduate Engineer Trainee (Automation)</div>
+        <div class="exp-date">2024 — 2025</div>
+      </div>
+      <div class="exp-company">Godrej Koerber Supply Chain Ltd</div>
+      <ul class="exp-bullets">
+        <li>Assisted in PLC programming, testing, and validation of warehouse automation systems</li>
+        <li>Gained exposure to industrial communication standards, system workflows, and automation project lifecycle</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section>
+    <div class="section-label">Industrial Training</div>
+    <div class="exp-item">
+      <div class="exp-header">
+        <div class="exp-title">Industrial Automation Training</div>
+        <div class="exp-date">Jul 2024 — Oct 2024</div>
+      </div>
+      <div class="exp-company">The World of Automation · Pune</div>
+      <ul class="exp-bullets">
+        <li>Trained in PLC programming across Siemens, Allen-Bradley, and Mitsubishi platforms</li>
+        <li>Worked with Siemens HMI and FactoryTalk View SCADA for system monitoring and control</li>
+        <li>Studied industrial communication protocols and automation fundamentals</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <div class="section-label">Education</div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">Bachelor of Engineering — Electrical Engineering</div>
+        <div class="edu-uni">Savitribai Phule Pune University · 2024</div>
+      </div>
+      <div class="edu-score">
+        71.3%
+        <span>Score</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Shubham Dattatray Pujari &nbsp;·&nbsp; Automation Engineer &nbsp;·&nbsp; 2026
+  </footer>
+
+</div>
+</body>
+</html>
