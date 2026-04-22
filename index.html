@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Pujari — Automation Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f9fc;
+  --bg2: #ffffff;
+  --surface: #ffffff;
+  --border: #e4e8f0;
+  --border2: #d0d7e3;
+  --accent: #1a56db;
+  --accent2: #1e429f;
+  --accent-light: #ebf0ff;
+  --accent-mid: #c3d0f8;
+  --text: #111827;
+  --text2: #4b5563;
+  --text3: #9ca3af;
+  --green: #059669;
+  --sans: 'Outfit', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#f1f5f9;}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(248,249,252,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0;
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;padding:0 32px;
+  display:flex;justify-content:space-between;align-items:center;
+  height:64px;
+}
+.nav-logo{
+  font-family:var(--sans);font-size:0.95rem;font-weight:700;
+  color:var(--text);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);
+}
+.nav-links{display:flex;gap:8px;list-style:none;}
+.nav-links a{
+  font-size:0.82rem;font-weight:500;
+  color:var(--text2);text-decoration:none;
+  padding:6px 14px;border-radius:6px;
+  transition:all 0.2s;
+}
+.nav-links a:hover{background:var(--accent-light);color:var(--accent);}
+.nav-cta{
+  background:var(--accent)!important;
+  color:#fff!important;
+  font-weight:600!important;
+}
+.nav-cta:hover{background:var(--accent2)!important;color:#fff!important;}
+
+/* ── SECTIONS ── */
+.section{max-width:1080px;margin:0 auto;padding:96px 32px;}
+.sec-header{margin-bottom:48px;}
+.sec-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-light);color:var(--accent);
+  font-family:var(--mono);font-size:0.68rem;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:5px 12px;border-radius:20px;
+  margin-bottom:12px;
+}
+.sec-title{
+  font-size:1.9rem;font-weight:700;
+  color:var(--text);letter-spacing:-0.5px;
+}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  background:linear-gradient(135deg, #f8f9fc 0%, #eef2ff 50%, #f0fdf4 100%);
+  padding-top:64px;
+  position:relative;overflow:hidden;
+}
+#hero::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(26,86,219,0.06) 0%, transparent 70%);
+  top:-100px;right:-100px;pointer-events:none;
+}
+#hero::after{
+  content:'';position:absolute;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle, rgba(5,150,105,0.05) 0%, transparent 70%);
+  bottom:-50px;left:-50px;pointer-events:none;
+}
+.hero-inner{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:80px;align-items:center;
+  width:100%;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:20px;padding:6px 14px 6px 8px;
+  font-size:0.78rem;font-weight:500;color:var(--text2);
+  margin-bottom:24px;
+  box-shadow:var(--shadow);
+  opacity:0;animation:fadeUp 0.5s 0.1s ease forwards;
+}
+.hero-badge-dot{
+  width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.6rem;color:#fff;
+}
+.hero-name{
+  font-size:clamp(2.6rem,5vw,4rem);
+  font-weight:800;line-height:1.08;
+  letter-spacing:-2px;color:var(--text);
+  margin-bottom:12px;
+  opacity:0;animation:fadeUp 0.5s 0.2s ease forwards;
+}
+.hero-name span{
+  background:linear-gradient(135deg,var(--accent),#7c3aed);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-role{
+  font-size:1rem;font-weight:400;color:var(--text2);
+  margin-bottom:20px;
+  opacity:0;animation:fadeUp 0.5s 0.3s ease forwards;
+}
+.hero-desc{
+  font-size:0.93rem;color:var(--text2);
+  max-width:500px;line-height:1.8;margin-bottom:36px;
+  opacity:0;animation:fadeUp 0.5s 0.4s ease forwards;
+}
+.hero-btns{
+  display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px;
+  opacity:0;animation:fadeUp 0.5s 0.5s ease forwards;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:8px;
+  font-size:0.85rem;font-weight:600;
+  text-decoration:none;cursor:pointer;
+  transition:all 0.2s;border:none;font-family:var(--sans);
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(26,86,219,0.3);}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,86,219,0.35);}
+.btn-outline{background:#fff;color:var(--text);border:1px solid var(--border2);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.btn-whatsapp{background:#25d366;color:#fff;box-shadow:0 2px 8px rgba(37,211,102,0.3);}
+.btn-whatsapp:hover{background:#22c55e;transform:translateY(-1px);}
+
+.hero-stats{
+  display:flex;gap:32px;padding-top:32px;
+  border-top:1px solid var(--border);
+  opacity:0;animation:fadeUp 0.5s 0.6s ease forwards;
+}
+.stat-num{font-size:1.7rem;font-weight:800;color:var(--text);line-height:1;}
+.stat-num span{color:var(--accent);}
+.stat-label{font-size:0.73rem;color:var(--text3);margin-top:2px;font-weight:500;}
+
+/* HERO PHOTO */
+.hero-photo-wrap{
+  opacity:0;animation:fadeUp 0.5s 0.3s ease forwards;
+  display:flex;justify-content:center;
+}
+.hero-photo-ring{
+  position:relative;
+  width:280px;height:280px;
+}
+.hero-photo-ring::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),#7c3aed,#059669);
+  z-index:0;
+}
+.hero-photo-ring::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  background:var(--bg);z-index:1;
+}
+.hero-photo{
+  width:100%;height:100%;border-radius:50%;
+  object-fit:cover;object-position:top;
+  position:relative;z-index:2;
+  display:block;
+}
+
+/* ── ABOUT ── */
+#about{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start;}
+.about-text p{color:var(--text2);line-height:1.85;font-size:0.93rem;margin-bottom:16px;}
+.about-text p strong{color:var(--text);font-weight:600;}
+.about-info{display:flex;flex-direction:column;gap:10px;}
+.info-row{
+  display:flex;gap:16px;align-items:center;
+  padding:13px 16px;background:var(--bg);
+  border:1px solid var(--border);border-radius:8px;
+  transition:all 0.2s;
+}
+.info-row:hover{border-color:var(--accent-mid);box-shadow:var(--shadow);}
+.info-key{
+  font-family:var(--mono);font-size:0.65rem;font-weight:500;
+  color:var(--accent);letter-spacing:1px;
+  text-transform:uppercase;min-width:75px;
+}
+.info-val{font-size:0.85rem;color:var(--text2);}
+.info-val a{color:var(--text2);text-decoration:none;}
+.info-val a:hover{color:var(--accent);}
+.open-badge{
+  display:inline-block;background:#ecfdf5;
+  color:var(--green);font-weight:600;font-size:0.8rem;
+  padding:2px 10px;border-radius:20px;
+  border:1px solid #a7f3d0;
+}
+
+/* ── SKILLS ── */
+#skills{background:var(--bg);}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.skill-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:12px;padding:24px;
+  transition:all 0.2s;box-shadow:var(--shadow);
+}
+.skill-card:hover{border-color:var(--accent-mid);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.skill-card-icon{font-size:1.4rem;margin-bottom:10px;}
+.skill-card-label{
+  font-size:0.78rem;font-weight:700;
+  color:var(--text);text-transform:uppercase;
+  letter-spacing:1px;margin-bottom:14px;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{
+  background:var(--accent-light);color:var(--accent);
+  padding:4px 10px;border-radius:4px;
+  font-size:0.76rem;font-weight:500;
+}
+
+/* ── EXPERIENCE ── */
+#experience{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{
+  display:grid;grid-template-columns:180px 1fr;
+  gap:32px;padding:40px 0;
+  border-bottom:1px solid var(--border);
+  opacity:0;transform:translateY(12px);
+  transition:opacity 0.5s,transform 0.5s;
+}
+.tl-item:last-child{border-bottom:none;}
+.tl-item.visible{opacity:1;transform:translateY(0);}
+.tl-left{}
+.tl-date{
+  font-family:var(--mono);font-size:0.72rem;
+  color:var(--text3);font-weight:500;
+  line-height:1.5;margin-bottom:8px;
+}
+.tl-badge{
+  display:inline-block;
+  background:var(--accent-light);color:var(--accent);
+  font-size:0.68rem;font-weight:600;
+  padding:3px 10px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.tl-badge.training{background:#fef3c7;color:#92400e;}
+.tl-right{}
+.tl-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.tl-company{
+  font-size:0.82rem;color:var(--accent);
+  font-weight:500;margin-bottom:16px;
+}
+.tl-bullets{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.tl-bullets li{
+  font-size:0.87rem;color:var(--text2);
+  line-height:1.65;padding-left:16px;position:relative;
+}
+.tl-bullets li::before{
+  content:'';position:absolute;left:0;top:9px;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+}
+
+/* ── PROJECTS ── */
+#projects{background:var(--bg);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.project-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:12px;padding:28px;
+  min-height:180px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;gap:12px;
+  box-shadow:var(--shadow);transition:all 0.2s;
+  border-style:dashed;
+}
+.project-card:hover{border-color:var(--accent-mid);}
+.project-empty-icon{font-size:2rem;opacity:0.5;}
+.project-empty-title{font-size:0.88rem;font-weight:600;color:var(--text);}
+.project-empty-text{font-size:0.78rem;color:var(--text3);line-height:1.6;}
+.projects-note{
+  text-align:center;margin-top:24px;
+  font-family:var(--mono);font-size:0.7rem;
+  color:var(--text3);letter-spacing:1px;
+}
+
+/* ── CERTIFICATIONS ── */
+#certifications{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.cert-card{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:12px;padding:24px;
+  display:flex;gap:16px;align-items:flex-start;
+  transition:all 0.2s;box-shadow:var(--shadow);
+}
+.cert-card:hover{border-color:var(--accent-mid);box-shadow:var(--shadow-md);}
+.cert-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:var(--accent-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.cert-title{font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+.cert-issuer{font-size:0.75rem;color:var(--text3);margin-bottom:8px;}
+.cert-badge{
+  display:inline-block;font-size:0.65rem;font-weight:600;
+  padding:2px 9px;border-radius:20px;
+  letter-spacing:0.5px;text-transform:uppercase;
+}
+.cert-badge.progress{background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;}
+.cert-badge.self{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;}
+.cert-badge.completed{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg);}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.contact-text h3{
+  font-size:1.6rem;font-weight:800;
+  color:var(--text);letter-spacing:-0.5px;margin-bottom:10px;
+}
+.contact-text p{font-size:0.9rem;color:var(--text2);line-height:1.8;margin-bottom:28px;}
+.contact-links{display:flex;flex-direction:column;gap:10px;}
+.contact-link{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;
+  padding:13px 16px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:10px;transition:all 0.2s;
+  box-shadow:var(--shadow);
+}
+.contact-link:hover{border-color:var(--accent-mid);box-shadow:var(--shadow-md);}
+.contact-link-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--accent-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;flex-shrink:0;
+}
+.contact-link-text{font-size:0.85rem;color:var(--text2);font-weight:500;}
+.contact-link:hover .contact-link-text{color:var(--accent);}
+
+/* FORM */
+.contact-form{
+  background:#fff;border:1px solid var(--border);
+  border-radius:16px;padding:32px;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:16px;
+}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:0.78rem;font-weight:600;color:var(--text);}
+.form-input,.form-textarea{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:8px;padding:11px 14px;
+  color:var(--text);font-family:var(--sans);font-size:0.88rem;
+  transition:all 0.2s;outline:none;width:100%;
+}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(26,86,219,0.1);
+  background:#fff;
+}
+.form-textarea{resize:vertical;min-height:110px;}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text3);}
+.form-submit{
+  background:#25d366;color:#fff;
+  border:none;border-radius:8px;padding:13px 24px;
+  font-family:var(--sans);font-size:0.88rem;font-weight:700;
+  cursor:pointer;transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 2px 8px rgba(37,211,102,0.3);
+}
+.form-submit:hover{background:#22c55e;transform:translateY(-1px);}
+.form-note{font-size:0.72rem;color:var(--text3);text-align:center;}
+
+/* ── FOOTER ── */
+footer{
+  background:#fff;border-top:1px solid var(--border);
+  padding:28px 32px;
+  display:flex;justify-content:center;align-items:center;
+  gap:8px;flex-wrap:wrap;
+  font-size:0.8rem;color:var(--text3);
+}
+footer a{color:var(--accent);text-decoration:none;font-weight:600;}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .skills-grid,.certs-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-photo-wrap{order:-1;margin-bottom:0;}
+  .hero-photo-ring{width:160px;height:160px;}
+  #about .about-grid{grid-template-columns:1fr;}
+  .tl-item{grid-template-columns:1fr;}
+  .contact-inner{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .skills-grid,.certs-grid,.projects-grid{grid-template-columns:1fr;}
+  .section{padding:72px 20px;}
+  nav .nav-links li:not(:last-child){display:none;}
+  .hero-stats{flex-wrap:wrap;gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <div class="nav-logo-dot"></div>
+      Shubham Pujari
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="section">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <div class="hero-badge-dot">✓</div>
+          Open to Office · Hybrid · Remote Roles
+        </div>
+        <h1 class="hero-name">Shubham<br><span>Pujari</span></h1>
+        <p class="hero-role">Automation Engineer · SCADA · PLC · IoT Integration</p>
+        <p class="hero-desc">
+          Building intelligent industrial systems that connect the factory floor to the digital world.
+          Specializing in PLC programming, SCADA integration, and warehouse automation at Godrej Koerber.
+        </p>
+        <div class="hero-btns">
+          <a href="shubham_Pujari.pdf" download class="btn btn-primary">↓ Download Resume</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+          <a href="https://www.linkedin.com/in/shubham-pujari-932338286" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">1.5<span>+</span></div>
+            <div class="stat-label">Years Exp</div>
+          </div>
+          <div>
+            <div class="stat-num">3<span>+</span></div>
+            <div class="stat-label">PLC Platforms</div>
+          </div>
+          <div>
+            <div class="stat-num">5<span>+</span></div>
+            <div class="stat-label">Protocols</div>
+          </div>
+          <div>
+            <div class="stat-num">BE</div>
+            <div class="stat-label">Electrical Eng</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-ring">
+          <img src="shubham.png" alt="Shubham Pujari" class="hero-photo">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// About</div>
+      <h2 class="sec-title">Who I Am</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm an <strong>Automation Engineer</strong> with hands-on experience building and integrating control systems for large-scale warehouse automation. At <strong>Godrej Koerber Supply Chain Ltd</strong>, I worked on conveyor systems, stacker cranes, and shuttle systems — developing PLC logic and connecting it all through SCADA and WMS platforms.</p>
+        <p>My strength lies at the intersection of <strong>OT and IT</strong> — I understand the factory floor deeply and I'm expanding into SCADA development, IoT protocols, and cloud integration to build smarter, more connected industrial systems.</p>
+        <p>I'm currently seeking <strong>office-based or hybrid roles</strong> in automation development, system integration, or application engineering where I can contribute from day one.</p>
+      </div>
+      <div class="about-info">
+        <div class="info-row">
+          <div class="info-key">Location</div>
+          <div class="info-val">Ahmednagar, Maharashtra</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">Email</div>
+          <div class="info-val"><a href="mailto:pujarishubham7028@gmail.com">pujarishubham7028@gmail.com</a></div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">Phone</div>
+          <div class="info-val"><a href="tel:+917028855501">+91 7028855501</a></div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">LinkedIn</div>
+          <div class="info-val"><a href="https://www.linkedin.com/in/shubham-pujari-932338286" target="_blank">shubham-pujari ↗</a></div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">Degree</div>
+          <div class="info-val">BE Electrical · SPPU · 71.3%</div>
+        </div>
+        <div class="info-row">
+          <div class="info-key">Open To</div>
+          <div class="info-val"><span class="open-badge">Office / Hybrid / Remote</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// Skills</div>
+      <h2 class="sec-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon">🖥️</div>
+        <div class="skill-card-label">PLC Platforms</div>
+        <div class="skill-tags">
+          <span class="tag">Siemens S7</span>
+          <span class="tag">TIA Portal</span>
+          <span class="tag">Allen-Bradley</span>
+          <span class="tag">Mitsubishi PLC</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">📊</div>
+        <div class="skill-card-label">SCADA / HMI</div>
+        <div class="skill-tags">
+          <span class="tag">Siemens HMI</span>
+          <span class="tag">FactoryTalk View</span>
+          <span class="tag">Ignition (Learning)</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🔗</div>
+        <div class="skill-card-label">Communication</div>
+        <div class="skill-tags">
+          <span class="tag">PROFINET</span>
+          <span class="tag">Ethernet/IP</span>
+          <span class="tag">Wireless</span>
+          <span class="tag">MQTT</span>
+          <span class="tag">OPC-UA</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">💻</div>
+        <div class="skill-card-label">Programming</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Ladder Logic</span>
+          <span class="tag">Structured Text</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">⚙️</div>
+        <div class="skill-card-label">Integration</div>
+        <div class="skill-tags">
+          <span class="tag">PLC–WMS</span>
+          <span class="tag">System Diagnostics</span>
+          <span class="tag">FAT / SAT</span>
+          <span class="tag">I/O Testing</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🏭</div>
+        <div class="skill-card-label">Domain</div>
+        <div class="skill-tags">
+          <span class="tag">Conveyor Systems</span>
+          <span class="tag">Stacker Cranes</span>
+          <span class="tag">Shuttle Systems</span>
+          <span class="tag">Warehouse Automation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// Experience</div>
+      <h2 class="sec-title">Work History</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">Jan 2025 —<br>Apr 2026</div>
+          <span class="tl-badge">Full Time</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-title">Automation Commissioning Engineer</div>
+          <div class="tl-company">Godrej Koerber Supply Chain Ltd · Navi Mumbai</div>
+          <ul class="tl-bullets">
+            <li>Developed PLC control logic using Siemens TIA Portal for conveyor, stacker crane, and shuttle systems in large-scale warehouse automation projects</li>
+            <li>Integrated PLC systems with SCADA and WMS platforms enabling real-time monitoring, data exchange, and centralized control</li>
+            <li>Configured industrial communication networks including PROFINET, Ethernet/IP, and wireless systems</li>
+            <li>Implemented safety interlocks, control strategies, and performed system validation including FAT, SAT, and I/O testing</li>
+            <li>Collaborated with electrical, mechanical, and software teams for end-to-end system integration</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">2024 —<br>2025</div>
+          <span class="tl-badge">Trainee</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-title">Graduate Engineer Trainee (Automation)</div>
+          <div class="tl-company">Godrej Koerber Supply Chain Ltd</div>
+          <ul class="tl-bullets">
+            <li>Assisted in PLC programming, testing, and validation of warehouse automation systems</li>
+            <li>Gained exposure to industrial communication standards, system workflows, and automation project lifecycle</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-date">Jul 2024 —<br>Oct 2024</div>
+          <span class="tl-badge training">Training</span>
+        </div>
+        <div class="tl-right">
+          <div class="tl-title">Industrial Automation Training</div>
+          <div class="tl-company">The World of Automation · Pune</div>
+          <ul class="tl-bullets">
+            <li>Trained in PLC programming across Siemens, Allen-Bradley, and Mitsubishi platforms</li>
+            <li>Worked with Siemens HMI and FactoryTalk View SCADA for system monitoring and control</li>
+            <li>Studied industrial communication protocols and automation fundamentals</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// Projects</div>
+      <h2 class="sec-title">My Work</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-empty-icon">⚙️</div>
+        <div class="project-empty-title">Ignition SCADA Dashboard</div>
+        <div class="project-empty-text">Conveyor monitoring dashboard<br>Currently building</div>
+      </div>
+      <div class="project-card">
+        <div class="project-empty-icon">🔌</div>
+        <div class="project-empty-title">IoT Pipeline</div>
+        <div class="project-empty-text">PLC → MQTT → AWS IoT<br>In progress</div>
+      </div>
+      <div class="project-card">
+        <div class="project-empty-icon">📊</div>
+        <div class="project-empty-title">More Coming Soon</div>
+        <div class="project-empty-text">Projects will be added<br>as they are completed</div>
+      </div>
+    </div>
+    <p class="projects-note">Projects section will be updated as work is completed</p>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// Certifications</div>
+      <h2 class="sec-title">Certifications & Education</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🏆</div>
+        <div>
+          <div class="cert-title">Ignition Core Certification</div>
+          <div class="cert-issuer">Inductive Automation · Inductive University</div>
+          <span class="cert-badge progress">In Progress</span>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-title">AWS IoT Core Fundamentals</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+          <span class="cert-badge self">Self Study</span>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-title">BE — Electrical Engineering</div>
+          <div class="cert-issuer">Savitribai Phule Pune University · 2024</div>
+          <span class="cert-badge completed">71.3% · Completed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-tag">// Contact</div>
+      <h2 class="sec-title">Let's Work Together</h2>
+    </div>
+    <div class="contact-inner">
+      <div>
+        <div class="contact-text">
+          <p>Open to office-based, hybrid, or remote opportunities in automation development, SCADA engineering, or IoT integration. Feel free to reach out directly.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:pujarishubham7028@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            <span class="contact-link-text">pujarishubham7028@gmail.com</span>
+          </a>
+          <a href="tel:+917028855501" class="contact-link">
+            <div class="contact-link-icon">📱</div>
+            <span class="contact-link-text">+91 7028855501</span>
+          </a>
+          <a href="https://www.linkedin.com/in/shubham-pujari-932338286" target="_blank" class="contact-link">
+            <div class="contact-link-icon">in</div>
+            <span class="contact-link-text">linkedin.com/in/shubham-pujari</span>
+          </a>
+          <a href="https://wa.me/917028855501" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💬</div>
+            <span class="contact-link-text">WhatsApp Me Directly</span>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h4 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">Send a Message</h4>
+        <p style="font-size:0.82rem;color:var(--text3);margin-bottom:8px;">Opens WhatsApp with your message pre-filled</p>
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" id="wa-name" placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" id="wa-message" placeholder="Tell me about the opportunity..."></textarea>
+        </div>
+        <button class="form-submit" onclick="sendWhatsApp()">
+          <span>💬</span> Send on WhatsApp
+        </button>
+        <p class="form-note">Opens WhatsApp on your device · Message goes directly to Shubham</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Shubham Dattatray Pujari</span>
+  <span>·</span>
+  <span>Automation Engineer</span>
+  <span>·</span>
+  <span>2026</span>
+  <span>·</span>
+  <a href="https://shubhampujari09.github.io">shubhampujari09.github.io</a>
+</footer>
+
+<script>
+// Timeline scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.tl-item').forEach(el => observer.observe(el));
+
+// WhatsApp
+function sendWhatsApp() {
+  const name = document.getElementById('wa-name').value || 'Someone';
+  const message = document.getElementById('wa-message').value || 'Hi, I visited your portfolio!';
+  const text = `Hi Shubham, I'm ${name}. ${message}`;
+  window.open(`https://wa.me/917028855501?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 80) current = s.id; });
+  navLinks.forEach(a => {
+    const isActive = a.getAttribute('href') === '#' + current;
+    if(!a.classList.contains('nav-cta')) {
+      a.style.background = isActive ? 'var(--accent-light)' : '';
+      a.style.color = isActive ? 'var(--accent)' : '';
+    }
+  });
+});
+</script>
+</body>
+</html>
