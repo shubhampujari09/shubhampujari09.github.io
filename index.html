@@ -846,5 +846,537 @@ window.addEventListener('scroll', () => {
   });
 });
 </script>
+  <style>
+/* Chatbot Styles */
+.chatbot-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  font-family: 'Outfit', sans-serif;
+}
+
+.chatbot-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a56db, #1e429f);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(26, 86, 219, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.chatbot-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 32px rgba(26, 86, 219, 0.4);
+}
+
+.chatbot-button svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+.chatbot-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #059669;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.chatbot-window {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 380px;
+  max-width: calc(100vw - 48px);
+  height: 550px;
+  max-height: calc(100vh - 140px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+.chatbot-window.active {
+  display: flex;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chatbot-header {
+  background: linear-gradient(135deg, #1a56db, #1e429f);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chatbot-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.chatbot-header-text h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.chatbot-header-text p {
+  margin: 2px 0 0 0;
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+.chatbot-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.chatbot-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f8f9fc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chatbot-message {
+  display: flex;
+  gap: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chatbot-message.user {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.message-avatar.bot {
+  background: #ebf0ff;
+}
+
+.message-avatar.user {
+  background: #e4e8f0;
+}
+
+.message-bubble {
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.message-bubble.bot {
+  background: white;
+  color: #111827;
+  border: 1px solid #e4e8f0;
+}
+
+.message-bubble.user {
+  background: #1a56db;
+  color: white;
+  border-radius: 12px 12px 0 12px;
+}
+
+.message-bubble.bot {
+  border-radius: 12px 12px 12px 0;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 0 20px;
+}
+
+.quick-reply {
+  background: white;
+  border: 1px solid #e4e8f0;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #1a56db;
+  font-weight: 500;
+}
+
+.quick-reply:hover {
+  background: #ebf0ff;
+  border-color: #1a56db;
+}
+
+.chatbot-input {
+  padding: 16px 20px;
+  background: white;
+  border-top: 1px solid #e4e8f0;
+  display: flex;
+  gap: 12px;
+}
+
+.chatbot-input input {
+  flex: 1;
+  border: 1px solid #e4e8f0;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  outline: none;
+  font-family: 'Outfit', sans-serif;
+}
+
+.chatbot-input input:focus {
+  border-color: #1a56db;
+}
+
+.chatbot-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1a56db;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.chatbot-send:hover {
+  background: #1e429f;
+  transform: scale(1.05);
+}
+
+.chatbot-send svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9ca3af;
+  animation: typing 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+}
+
+@media (max-width: 600px) {
+  .chatbot-window {
+    bottom: 90px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: 500px;
+  }
+  
+  .chatbot-container {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+</style>
+
+<div class="chatbot-container">
+  <!-- Chat Button -->
+  <button class="chatbot-button" onclick="toggleChatbot()">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.03 4.36L2 22l5.64-1.03C9.96 21.64 11.46 22 13 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.31 0-2.59-.28-3.76-.81l-.27-.13-2.8.51.51-2.8-.13-.27C4.28 14.59 4 13.31 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+      <circle cx="8" cy="12" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="16" cy="12" r="1.5"/>
+    </svg>
+    <div class="chatbot-badge"></div>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chatbot-window" id="chatWindow">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">🤖</div>
+      <div class="chatbot-header-text">
+        <h4>Shubham's Assistant</h4>
+        <p>Ask me anything about my experience!</p>
+      </div>
+      <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chatbot-messages" id="chatMessages">
+      <div class="chatbot-message">
+        <div class="message-avatar bot">🤖</div>
+        <div>
+          <div class="message-bubble bot">
+            Hi! I'm Shubham's AI assistant. I can answer questions about his experience, skills, projects, and availability. What would you like to know?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Replies -->
+    <div class="quick-replies" id="quickReplies">
+      <button class="quick-reply" onclick="askQuestion('Tell me about your experience')">Experience</button>
+      <button class="quick-reply" onclick="askQuestion('What skills do you have?')">Skills</button>
+      <button class="quick-reply" onclick="askQuestion('Show me your projects')">Projects</button>
+      <button class="quick-reply" onclick="askQuestion('How can I contact you?')">Contact</button>
+    </div>
+
+    <!-- Input -->
+    <div class="chatbot-input">
+      <input type="text" id="chatInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+      <button class="chatbot-send" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Chatbot Logic
+const responses = {
+  experience: {
+    keywords: ['experience', 'work', 'job', 'godrej', 'koerber', 'career', 'background'],
+    answer: "I have 1.5+ years of experience at Godrej Koerber Supply Chain Ltd working on PLC programming, SCADA integration, and warehouse automation. I've developed control logic for conveyor systems, stacker cranes, and shuttle systems using Siemens TIA Portal. I'm now transitioning to office-based SCADA/IoT development roles."
+  },
+  skills: {
+    keywords: ['skills', 'technology', 'tech stack', 'tools', 'programming', 'languages'],
+    answer: "My core skills include:\n• PLC: Siemens S7 (TIA Portal), Allen-Bradley, Mitsubishi\n• SCADA: Ignition (Perspective, Vision), Siemens HMI, FactoryTalk View\n• Protocols: MQTT, OPC-UA, PROFINET, Ethernet/IP\n• Programming: Python, SQL, Jython\n• Integration: PLC-WMS systems, Cloud IoT (AWS IoT Core)"
+  },
+  ignition: {
+    keywords: ['ignition', 'scada', 'perspective', 'inductive'],
+    answer: "I'm certified in Ignition through Inductive University! I've built several projects using Perspective module including industrial conveyor monitoring, multi-protocol IoT gateway, and production dashboards with OPC-UA and MQTT integration."
+  },
+  projects: {
+    keywords: ['projects', 'portfolio', 'built', 'created', 'developed', 'work samples'],
+    answer: "I've built several automation projects:\n• Industrial Conveyor Monitoring (Ignition + OPC-UA)\n• Multi-Protocol IoT Gateway (MQTT, OPC-UA, Modbus)\n• Cloud-Connected Production Monitor (AWS IoT)\n• Smart Factory OEE Dashboard\n\nCheck out the Projects section on this page to see detailed information!"
+  },
+  contact: {
+    keywords: ['contact', 'email', 'phone', 'reach', 'whatsapp', 'message', 'talk'],
+    answer: "You can reach me at:\n📧 pujarishubham7028@gmail.com\n📱 +91 7028855501\n💼 LinkedIn: linkedin.com/in/shubham-pujari\n\nOr use the WhatsApp button in the Contact section to message me directly!"
+  },
+  resume: {
+    keywords: ['resume', 'cv', 'download', 'pdf'],
+    answer: "You can download my resume using the 'Download Resume' button at the top of this page! It includes detailed information about my experience, skills, and projects."
+  },
+  location: {
+    keywords: ['location', 'where', 'based', 'city', 'remote', 'hybrid', 'office'],
+    answer: "I'm based in Ahmednagar, Maharashtra, but I'm completely open to office, hybrid, or remote opportunities across India. I'm specifically looking for roles that don't require extensive site travel."
+  },
+  salary: {
+    keywords: ['salary', 'compensation', 'pay', 'ctc', 'package', 'expecting'],
+    answer: "I'm targeting roles in the ₹8-12 LPA range for SCADA/IoT development positions. I'm open to discussion based on the role, responsibilities, and company."
+  },
+  why: {
+    keywords: ['why', 'left', 'leaving', 'change', 'transition'],
+    answer: "I left my commissioning role because I want to focus on development work in office/hybrid settings rather than continuous site travel. I'm passionate about building SCADA and IoT solutions and want to leverage my field experience in a development role."
+  },
+  availability: {
+    keywords: ['available', 'start', 'notice', 'join', 'when'],
+    answer: "I'm immediately available and can join within 15 days or less. I'm actively looking for office-based or hybrid SCADA/IoT development opportunities."
+  },
+  education: {
+    keywords: ['education', 'degree', 'college', 'university', 'studied'],
+    answer: "I hold a Bachelor of Engineering in Electrical Engineering from Savitribai Phule Pune University (2024) with 71.3% score. I also completed Industrial Automation Training from The World of Automation, Pune."
+  },
+  certification: {
+    keywords: ['certification', 'certified', 'certificate', 'training'],
+    answer: "I'm currently pursuing Ignition Core Certification from Inductive University. I've also completed self-study in AWS IoT Core fundamentals and have hands-on training in PLC programming across multiple platforms."
+  }
+};
+
+const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'];
+const thanks = ['thanks', 'thank you', 'appreciate'];
+
+function toggleChatbot() {
+  const chatWindow = document.getElementById('chatWindow');
+  chatWindow.classList.toggle('active');
+  
+  if (chatWindow.classList.contains('active')) {
+    document.getElementById('chatInput').focus();
+  }
+}
+
+function addMessage(text, isUser = false) {
+  const messagesDiv = document.getElementById('chatMessages');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `chatbot-message ${isUser ? 'user' : ''}`;
+  
+  messageDiv.innerHTML = `
+    <div class="message-avatar ${isUser ? 'user' : 'bot'}">${isUser ? '👤' : '🤖'}</div>
+    <div>
+      <div class="message-bubble ${isUser ? 'user' : 'bot'}">${text.replace(/\n/g, '<br>')}</div>
+    </div>
+  `;
+  
+  messagesDiv.appendChild(messageDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function showTyping() {
+  const messagesDiv = document.getElementById('chatMessages');
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typing';
+  typingDiv.className = 'chatbot-message';
+  typingDiv.innerHTML = `
+    <div class="message-avatar bot">🤖</div>
+    <div class="message-bubble bot typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  messagesDiv.appendChild(typingDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function hideTyping() {
+  const typing = document.getElementById('typing');
+  if (typing) typing.remove();
+}
+
+function findResponse(message) {
+  message = message.toLowerCase();
+  
+  // Check greetings
+  if (greetings.some(g => message.includes(g))) {
+    return "Hello! I'm here to help you learn about Shubham's experience and skills. What would you like to know?";
+  }
+  
+  // Check thanks
+  if (thanks.some(t => message.includes(t))) {
+    return "You're welcome! Feel free to ask anything else about Shubham's background or reach out to him directly.";
+  }
+  
+  // Check knowledge base
+  for (const [key, data] of Object.entries(responses)) {
+    if (data.keywords.some(keyword => message.includes(keyword))) {
+      return data.answer;
+    }
+  }
+  
+  // Default response
+  return "I'm not sure about that, but you can:\n• Ask about Shubham's experience, skills, or projects\n• Request his contact information\n• Download his resume\n• Or reach out directly at pujarishubham7028@gmail.com";
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  // Add user message
+  addMessage(message, true);
+  input.value = '';
+  
+  // Hide quick replies after first interaction
+  document.getElementById('quickReplies').style.display = 'none';
+  
+  // Show typing indicator
+  showTyping();
+  
+  // Simulate delay
+  setTimeout(() => {
+    hideTyping();
+    const response = findResponse(message);
+    addMessage(response);
+  }, 800);
+}
+
+function askQuestion(question) {
+  document.getElementById('chatInput').value = question;
+  sendMessage();
+}
+
+function handleKeyPress(event) {
+  if (event.key === 'Enter') {
+    sendMessage();
+  }
+}
+</script>
 </body>
 </html>
